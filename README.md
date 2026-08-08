@@ -1,3 +1,5 @@
+[![Maven Central](https://img.shields.io/maven-central/v/io.github.mgoradecodes/pathlite.svg)](https://central.sonatype.com/artifact/io.github.mgoradecodes/pathlite)
+
 # PathLite
 
 Tiny SQLite directory-based connection helper for Java.
