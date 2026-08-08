@@ -4,14 +4,14 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>io.github.MGoradeCodes</groupId>
+    <groupId>io.github.mgoradecodes</groupId>
     <artifactId>pathlite</artifactId>
     <version>1.0.0</version>
     <packaging>jar</packaging>
 
     <name>PathLite</name>
     <description>Tiny SQLite directory-based connection helper for Java</description>
-    <url>https://github.com/MGoradeCodes/pathlite</url>
+    <url>https://github.com/mgoradecodes/pathlite</url>
 
     <licenses>
         <license>
@@ -22,15 +22,15 @@
 
     <developers>
         <developer>
-            <id>MGoradeCodes</id>
+            <id>mgoradecodes</id>
             <name>Manthan</name>
         </developer>
     </developers>
 
     <scm>
-        <connection>scm:git:git://github.com/MGoradeCodes/pathlite.git</connection>
-        <developerConnection>scm:git:ssh://github.com/MGoradeCodes/pathlite.git</developerConnection>
-        <url>https://github.com/MGoradeCodes/pathlite</url>
+        <connection>scm:git:git://github.com/mgoradecodes/pathlite.git</connection>
+        <developerConnection>scm:git:ssh://github.com/mgoradecodes/pathlite.git</developerConnection>
+        <url>https://github.com/mgoradecodes/pathlite</url>
     </scm>
 
     <properties>
@@ -46,5 +46,61 @@
             <version>3.53.2.0</version>
         </dependency>
     </dependencies>
+
+    <build>
+        <plugins>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>3.3.1</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>3.8.0</version>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+                <version>3.2.4</version>
+                <executions>
+                    <execution>
+                        <id>sign-artifacts</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>sign</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+        </plugins>
+    </build>
+
+    <distributionManagement>
+        <repository>
+            <id>central</id>
+            <url>https://central.sonatype.com/api/v1/publisher/upload</url>
+        </repository>
+    </distributionManagement>
 
 </project>
