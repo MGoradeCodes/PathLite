@@ -1,3 +1,5 @@
+package io.github.MGoradeCodes.pathlite;
+
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
