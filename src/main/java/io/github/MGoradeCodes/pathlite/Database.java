@@ -1,5 +1,6 @@
 package io.github.MGoradeCodes.pathlite;
 
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -9,24 +10,32 @@ import java.sql.SQLException;
 
 public class Database {
 
-    private final Path directory;
-    private final Path path;
+    private Path directory = Paths.get("databases");
 
-    public Database(String inputDir) {
-        try {
-            path = Paths.get(inputDir);
-            Files.createDirectories(path);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        this.directory = path;
+    public Database() {
+        initDirectory();
     }
 
-    public Connection getConnection(String dbName)
-            throws SQLException {
-        Path dbPath = directory.resolve(dbName);
-        String url = "jdbc:sqlite:" + dbPath.toAbsolutePath();
+    public void setDir(String inputDir) {
+        this.directory = Paths.get(inputDir);
+        initDirectory();
+    }
 
+    private void initDirectory() {
+        try {
+            Files.createDirectories(directory);
+        } catch (IOException e) {
+            throw new RuntimeException("Failed to create directory", e);
+        }
+    }
+
+    private String normalize(String dbName) {
+        return dbName.endsWith(".db") ? dbName : dbName + ".db";
+    }
+
+    public Connection getConnection(String dbName) throws SQLException {
+        Path dbPath = directory.resolve(normalize(dbName));
+        String url = "jdbc:sqlite:" + dbPath.toAbsolutePath();
         return DriverManager.getConnection(url);
     }
 }
