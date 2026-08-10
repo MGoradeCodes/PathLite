@@ -1,113 +1,81 @@
 # PathLite
 
-PathLite is a lightweight Java library that makes working with **SQLite databases** simple and fast. It is designed for small projects, desktop apps, bots, and tools where you want a database without writing a lot of boilerplate JDBC code.
-
-## Features
-
-* Simple SQLite database access
-* Minimal setup
-* Lightweight and easy to learn
-* Works with standard JDBC
-* Suitable for Java desktop applications and bots
-
----
+Tiny SQLite directory-based connection helper for Java.
 
 ## Installation
 
-Add PathLite to your Maven project.
-
-### Maven
-
 ```xml
 <dependency>
-    <groupId>io.github.MGoradeCodes</groupId>
+    <groupId>io.github.mgoradecodes</groupId>
     <artifactId>pathlite</artifactId>
-    <version>1.0.0</version>
+    <version>1.1.0</version>
 </dependency>
 ```
-
----
-
-## Requirements
-
-* Java 21 or newer
-* SQLite JDBC driver
-
-Example dependency:
-
-```xml
-<dependency>
-    <groupId>org.xerial</groupId>
-    <artifactId>sqlite-jdbc</artifactId>
-    <version>3.46.0.0</version>
-</dependency>
-```
-
----
 
 ## Quick Start
 
 ```java
-import io.github.MGoradeCodes.pathlite.DB;
+import io.github.MGoradeCodes.pathlite.Database;
+import java.sql.Connection;
 
 public class Main {
     public static void main(String[] args) throws Exception {
-        DB db = new DB("data/app.db");
 
-        // Use your DB instance here
-        System.out.println("Database connected!");
+        Database db = new Database();
+
+        // Creates/uses databases/users.db
+        Connection conn = db.getConnection("users");
+
+        System.out.println("Connected!");
+        conn.close();
     }
 }
 ```
 
----
+## Custom Database Directory
 
-## Project Structure
+```java
+Database db = new Database();
 
-```text
-data/
-└── app.db
+db.setDir("C:/MyApp/Data");
+
+// Creates/uses C:/MyApp/Data/users.db
+Connection conn = db.getConnection("users");
 ```
 
-PathLite will create the database file if it does not already exist.
+## Features
 
----
+- Automatic database directory creation
+- Default `databases/` folder
+- Custom database directory support
+- Automatic `.db` extension handling
+- Lightweight wrapper around SQLite JDBC
+- Works alongside standard JDBC
 
-## Use Cases
+## Example JDBC Usage
 
-* JavaFX desktop applications
-* Swing applications
-* Discord bots
-* Small utilities and tools
-* Learning JDBC and SQLite
+```java
+Database db = new Database();
 
----
+try (Connection conn = db.getConnection("users")) {
 
-## Why PathLite?
+    String sql = """
+        CREATE TABLE IF NOT EXISTS users (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            username TEXT,
+            balance REAL
+        )
+    """;
 
-JDBC is powerful, but it can feel verbose for small projects. PathLite provides a cleaner starting point while still using standard JDBC underneath, so you can expand your application later without being locked into a custom database engine.
+    conn.createStatement().execute(sql);
+}
+```
 
----
+## Requirements
 
-## Maven Central
-
-PathLite is published on Maven Central.
-
-Search for:
-
-* **Group:** `io.github.MGoradeCodes`
-* **Artifact:** `pathlite`
-
----
+- Java 26+
+- SQLite JDBC
 
 ## License
 
-This project is licensed under the **MIT License**.
-
----
-
-## Author
-
-**Manthan Gorade**
-
-GitHub: https://github.com/MGoradeCodes
+MIT License
