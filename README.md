@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="Assets/Banner.png" alt="PathLite Banner">
+</p>
+
 # PathLite
 
 Tiny SQLite directory-based connection helper for Java.
