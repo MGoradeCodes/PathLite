@@ -1,5 +1,6 @@
 package io.github.MGoradeCodes.pathlite;
 
+import javax.xml.crypto.Data;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -11,6 +12,8 @@ import java.sql.SQLException;
 public class Database {
 
     private Path directory = Paths.get("databases");
+
+    String dbName;
 
     public Database() {
         initDirectory();
@@ -33,7 +36,12 @@ public class Database {
         return dbName.endsWith(".db") ? dbName : dbName + ".db";
     }
 
-    public Connection getConnection(String dbName) throws SQLException {
+    public Database createDb(String dbName) {
+        this.dbName = normalize(dbName);
+        return this;
+    }
+
+    public Connection getConnection() throws SQLException {
         Path dbPath = directory.resolve(normalize(dbName));
         String url = "jdbc:sqlite:" + dbPath.toAbsolutePath();
         return DriverManager.getConnection(url);
